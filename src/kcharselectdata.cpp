@@ -1025,3 +1025,24 @@ Index KCharSelectData::createIndex(const QByteArray &dataFile)
 
     return i;
 }
+// Hangul decomposition 
+QStringList KCharSelectData::decomposition(uint c) {
+    if (c < 0xAC00 && c > 0xD7A3 ) {
+        return QStringList();
+    }
+    uint SIndex = c - SBase;
+    if (SIndex < 0 || SIndex >= SCount) {
+        return QStringList();
+    }
+
+    uint L = LBase + SIndex / NCount;  // hangul choseong
+    uint V = VBase + (SIndex % NCount) / TCount; // hangul jungseong
+    uint T = TBase + SIndex % TCount; // hangul jongsung
+    QStringList jamoList;
+    jamoList.append(QString::number( L, 16 ).toUpper());
+    jamoList.append(QString::number( V, 16 ).toUpper());
+    if ( T != TBase) {
+        jamoList.append(QString::number( T, 16 ).toUpper());
+    }
+    return jamoList;
+}

@@ -768,6 +768,7 @@ void KCharSelect::KCharSelectPrivate::_k_slotUpdateUnicode(uint c)
     QVector<uint> seeAlso = s_data()->seeAlso(c);
     QStringList equivalents = s_data()->equivalents(c);
     QStringList approxEquivalents = s_data()->approximateEquivalents(c);
+    QStringList hangulDecomposition = s_data->decomposition(c);
     if (!(aliases.isEmpty() && notes.isEmpty() && seeAlso.isEmpty() && equivalents.isEmpty() && approxEquivalents.isEmpty())) {
         html += QStringLiteral("<p><b>") + tr("Annotations and Cross References") + QStringLiteral("</b></p>");
     }
@@ -817,6 +818,15 @@ void KCharSelect::KCharSelectPrivate::_k_slotUpdateUnicode(uint c)
             html += QStringLiteral("<li>") + createLinks(approxEquivalent.toHtmlEscaped()) + QStringLiteral("</li>");
         }
         html += QStringLiteral("</ul>");
+    }
+    // Hangul Syllables
+    if (!hangulDecomposition.isEmpty()) {
+        html += QStringLiteral("<p style=\"margin-bottom: 0px;\">") +  tr("Hangul Syllable decomposition: ") + QStringLiteral("<ul style=\"margin-top: 0px;\">");
+        foreach (const QString &decomposition, hangulDecomposition) {
+              html += QStringLiteral("<li>") + createLinks(decomposition.toHtmlEscaped()) + QStringLiteral("</li>");
+        }
+        html += QStringLiteral("</ul>");
+        html += QStringLiteral("</p>");
     }
 
     QStringList unihan = s_data()->unihanInfo(c);
