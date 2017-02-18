@@ -72,7 +72,6 @@ public:
     QString categoryText(QChar::Category category);
 
     QVector<uint> find(const QString &s);
-    QStringList decomposition(uint c);
 
 private:
     bool openDataFile();
