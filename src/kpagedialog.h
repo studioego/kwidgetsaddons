@@ -41,7 +41,7 @@ class KPageDialogPrivate;
  * different ways.
  *
  * Currently, @p Auto, @p Plain, @p List, @p Tree and @p Tabbed face
- * types are available (@see KPageView).
+ * types are available (cmp. KPageView).
  *
  * <b>Example:</b>\n
  *
@@ -73,25 +73,34 @@ class KWIDGETSADDONS_EXPORT KPageDialog : public QDialog
 public:
 
     /**
-     *  @li @p Auto   - A dialog with a face based on the structure of the
-     *                  available pages.
-     *                  If only a single page is added, the dialog behaves like
-     *                  in @p Plain mode, with multiple pages without sub pages
-     *                  it behaves like in @p List mode and like in @p Tree mode
-     *                  otherwise.
-     *  @li @p Plain  - A normal dialog.
-     *  @li @p List   - A dialog with an icon list on the left side and a
-     *                  representation of the contents on the right side.
-     *  @li @p Tree   - A dialog with a tree on the left side and a
-     *                  representation of the contents on the right side.
-     *  @li @p Tabbed - A dialog with a tab bar above the representation
-     *                  of the contents.
+     * The face types supported.
      */
     enum FaceType {
+        /**
+         * A dialog with a face based on the structure of the available pages.
+         * If only a single page is added, the dialog behaves like
+         * in @c Plain mode, with multiple pages without sub pages
+         * it behaves like in @c List mode and like in @c Tree mode otherwise.
+         */
         Auto   = KPageView::Auto,
+        /**
+         * A normal dialog
+         */
         Plain  = KPageView::Plain,
+        /**
+         * A dialog with an icon list on the left side and a
+         * representation of the contents on the right side
+         */
         List   = KPageView::List,
+        /**
+         * A dialog with a tree on the left side and a
+         * representation of the contents on the right side
+         */
         Tree   = KPageView::Tree,
+        /**
+         * A dialog with a tab bar above the representation
+         * of the contents
+         */
         Tabbed = KPageView::Tabbed
     };
 
@@ -99,7 +108,7 @@ public:
     /**
      * Creates a new page dialog.
      */
-    explicit KPageDialog(QWidget *parent = nullptr, Qt::WindowFlags flags = nullptr);
+    explicit KPageDialog(QWidget *parent = nullptr, Qt::WindowFlags flags = Qt::WindowFlags());
 
     /**
      * Destroys the page dialog.
@@ -117,72 +126,72 @@ public:
      * @param widget The widget of the page.
      * @param name The name which is displayed in the navigation view.
      *
-     * @returns The associated @see KPageWidgetItem.
+     * @returns The associated KPageWidgetItem.
      */
     KPageWidgetItem *addPage(QWidget *widget, const QString &name);
 
     /**
      * Adds a new top level page to the dialog.
      *
-     * @param item The @see KPageWidgetItem which describes the page.
+     * @param item The KPageWidgetItem which describes the page.
      */
     void addPage(KPageWidgetItem *item);
 
     /**
      * Inserts a new page in the dialog.
      *
-     * @param before The new page will be insert before this @see KPageWidgetItem
+     * @param before The new page will be insert before this KPageWidgetItem
      *               on the same level in hierarchy.
      * @param widget The widget of the page.
      * @param name The name which is displayed in the navigation view.
      *
-     * @returns The associated @see KPageWidgetItem.
+     * @returns The associated KPageWidgetItem.
      */
     KPageWidgetItem *insertPage(KPageWidgetItem *before, QWidget *widget, const QString &name);
 
     /**
      * Inserts a new page in the dialog.
      *
-     * @param before The new page will be insert before this @see KPageWidgetItem
+     * @param before The new page will be insert before this KPageWidgetItem
      *               on the same level in hierarchy.
      *
-     * @param item The @see KPageWidgetItem which describes the page.
+     * @param item The KPageWidgetItem which describes the page.
      */
     void insertPage(KPageWidgetItem *before, KPageWidgetItem *item);
 
     /**
      * Inserts a new sub page in the dialog.
      *
-     * @param parent The new page will be insert as child of this @see KPageWidgetItem.
+     * @param parent The new page will be insert as child of this KPageWidgetItem.
      * @param widget The widget of the page.
      * @param name The name which is displayed in the navigation view.
      *
-     * @returns The associated @see KPageWidgetItem.
+     * @returns The associated KPageWidgetItem.
      */
     KPageWidgetItem *addSubPage(KPageWidgetItem *parent, QWidget *widget, const QString &name);
 
     /**
      * Inserts a new sub page in the dialog.
      *
-     * @param parent The new page will be insert as child of this @see KPageWidgetItem.
+     * @param parent The new page will be insert as child of this KPageWidgetItem.
      *
-     * @param item The @see KPageWidgetItem which describes the page.
+     * @param item The KPageWidgetItem which describes the page.
      */
     void addSubPage(KPageWidgetItem *parent, KPageWidgetItem *item);
 
     /**
-     * Removes the page associated with the given @see KPageWidgetItem.
+     * Removes the page associated with the given KPageWidgetItem.
      */
     void removePage(KPageWidgetItem *item);
 
     /**
-     * Sets the page which is associated with the given @see KPageWidgetItem to
+     * Sets the page which is associated with the given KPageWidgetItem to
      * be the current page and emits the currentPageChanged() signal.
      */
     void setCurrentPage(KPageWidgetItem *item);
 
     /**
-     * Returns the @see KPageWidgetItem for the current page or 0 if there is no
+     * Returns the KPageWidgetItem for the current page or a null pointer if there is no
      * current page.
      */
     KPageWidgetItem *currentPage() const;
@@ -193,7 +202,7 @@ public:
     void setStandardButtons(QDialogButtonBox::StandardButtons buttons);
 
     /**
-     * Returns the QPushButton corresponding to the standard button which, or 0 if the standard
+     * Returns the QPushButton corresponding to the standard button which, or a null pointer if the standard
      * button doesn't exist in this dialog.
      */
     QPushButton *button(QDialogButtonBox::StandardButton which) const;
@@ -207,7 +216,7 @@ Q_SIGNALS:
     /**
      * This signal is emitted whenever the current page has changed.
      *
-     * @param current The new current page or 0 if no current page is available.
+     * @param current The new current page or a null pointer if no current page is available.
      * @param before The page that was current before the new current page has changed.
      */
     void currentPageChanged(KPageWidgetItem *current, KPageWidgetItem *before);
@@ -226,16 +235,16 @@ protected:
      * \param widget The KPageWidget object will be reparented to this object, so you can create
      * it without parent and you are not allowed to delete it.
      */
-    KPageDialog(KPageWidget *widget, QWidget *parent, Qt::WindowFlags flags = nullptr);
-    KPageDialog(KPageDialogPrivate &dd, KPageWidget *widget, QWidget *parent, Qt::WindowFlags flags = nullptr);
+    KPageDialog(KPageWidget *widget, QWidget *parent, Qt::WindowFlags flags = Qt::WindowFlags());
+    KPageDialog(KPageDialogPrivate &dd, KPageWidget *widget, QWidget *parent, Qt::WindowFlags flags = Qt::WindowFlags());
 
     /**
-     * Returns the page widget of the dialog or 0 if no page widget is set.
+     * Returns the page widget of the dialog or a null pointer if no page widget is set.
      */
     KPageWidget *pageWidget();
 
     /**
-     * Returns the page widget of the dialog or 0 if no page widget is set.
+     * Returns the page widget of the dialog or a null pointer if no page widget is set.
      */
     const KPageWidget *pageWidget() const;
 
@@ -250,12 +259,12 @@ protected:
     void setPageWidget(KPageWidget *widget);
 
     /**
-     * Returns the button box of the dialog or 0 if no button box is set.
+     * Returns the button box of the dialog or a null pointer if no button box is set.
      */
     QDialogButtonBox *buttonBox();
 
     /**
-     * Returns the button box of the dialog or 0 if no button box is set.
+     * Returns the button box of the dialog or a null pointer if no button box is set.
      */
     const QDialogButtonBox *buttonBox() const;
 

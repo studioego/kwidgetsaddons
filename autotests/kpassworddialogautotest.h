@@ -1,5 +1,5 @@
 /*
-    Copyright 2015 Elvis Angelaccio <elvis.angelaccio@kde.org>
+    Copyright 2017 Elvis Angelaccio <elvis.angelaccio@kde.org>
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Library General Public
@@ -17,32 +17,17 @@
     Boston, MA 02110-1301, USA.
 */
 
-#ifndef KNEWPASSWORDWIDGETTEST_H
-#define KNEWPASSWORDWIDGETTEST_H
+#ifndef KPASSWORDDIALOGAUTOTEST_H
+#define KPASSWORDDIALOGAUTOTEST_H
 
 #include <QObject>
 
-class KNewPasswordWidgetTest : public QObject
+class KPasswordDialogAutotest : public QObject
 {
     Q_OBJECT
 
 private Q_SLOTS:
 
-    void testEmptyPasswordAllowed();
-    void testEmptyPasswordNotAllowed();
-    void testPasswordTooShort();
-    void testPasswordMatch();
-    void testPasswordNotVerified();
-    void testWeakPassword();
-    void testStrongPassword();
-    void testReasonablePasswordLength();
-    void testPasswordStrengthWarningLevel();
-    void testNoWarningColorBeforeMismatch();
-    void testWarningColorIfMismatch();
-    void testWarningColorPostMatch();
-    void disablingWidgetShouldUseDisabledPalette();
-    void disablingParentShouldUseDisabledPalette();
-    void disablingRevealPasswordShouldHideVisibilityAction();
     void shouldNotHideVisibilityActionInPlaintextMode();
 };
 

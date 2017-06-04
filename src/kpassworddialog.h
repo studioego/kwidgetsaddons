@@ -126,11 +126,11 @@ public:
     /**
      * create a password dialog
      *
-     * @param parent the parent widget (default:NULL).
+     * @param parent the parent widget
      * @param flags a set of KPasswordDialogFlag flags
      */
     explicit KPasswordDialog(QWidget *parent = nullptr,
-                             const KPasswordDialogFlags &flags = nullptr);
+                             const KPasswordDialogFlags &flags = KPasswordDialog::NoFlags);
 
     /**
      * Destructor

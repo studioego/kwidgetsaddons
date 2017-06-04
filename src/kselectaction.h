@@ -247,7 +247,7 @@ public:
 
     /**
      * Inserts the action action to this widget's list of actions, before the action before.
-     * It appends the action if before is 0 or before is not a valid action for this widget.
+     * It appends the action if before is a null pointer or before is not a valid action for this widget.
      *
      * @since 5.0
      */
@@ -368,12 +368,12 @@ protected Q_SLOTS:
 
 protected:
     /**
-     * Reimplemented from @see QWidgetAction.
+     * Reimplemented from QWidgetAction.
      */
     QWidget *createWidget(QWidget *parent) Q_DECL_OVERRIDE;
 
     /**
-     * Reimplemented from @see QWidgetAction.
+     * Reimplemented from QWidgetAction.
      */
     void deleteWidget(QWidget *widget) Q_DECL_OVERRIDE;
 
