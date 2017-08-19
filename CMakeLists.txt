@@ -4,7 +4,7 @@ set(KF5_VERSION "5.37.0") # handled by release scripts
 project(KWidgetsAddons VERSION ${KF5_VERSION})
 
 include(FeatureSummary)
-find_package(ECM 5.36.0  NO_MODULE)
+find_package(ECM 5.38.0  NO_MODULE)
 set_package_properties(ECM PROPERTIES TYPE REQUIRED DESCRIPTION "Extra CMake Modules." URL "https://projects.kde.org/projects/kdesupport/extra-cmake-modules")
 feature_summary(WHAT REQUIRED_PACKAGES_NOT_FOUND FATAL_ON_MISSING_REQUIRED_PACKAGES)
 
@@ -14,7 +14,7 @@ set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH} ${ECM_KDE_MODULE_DIR})
 include(KDEInstallDirs)
 include(KDEFrameworkCompilerSettings NO_POLICY_SCOPE)
 include(KDECMakeSettings)
-set(REQUIRED_QT_VERSION 5.6.0)
+set(REQUIRED_QT_VERSION 5.7.0)
 find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Widgets)
 
 

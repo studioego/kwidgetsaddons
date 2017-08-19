@@ -34,7 +34,7 @@
 
 #define ARROWSIZE 5
 
-class KSelector::Private
+class Q_DECL_HIDDEN KSelector::Private
 {
 public:
     Private()
@@ -47,7 +47,7 @@ public:
     QStyle::PrimitiveElement arrowPE;
 };
 
-class KGradientSelector::KGradientSelectorPrivate
+class Q_DECL_HIDDEN KGradientSelector::KGradientSelectorPrivate
 {
 public:
     KGradientSelectorPrivate(KGradientSelector *q): q(q) {}
