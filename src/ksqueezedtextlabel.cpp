@@ -82,7 +82,8 @@ QSize KSqueezedTextLabel::sizeHint() const
     if (textWidth > maxWidth) {
         textWidth = maxWidth;
     }
-    return QSize(textWidth, QLabel::sizeHint().height());
+    const int chromeWidth = width() - contentsRect().width();
+    return QSize(textWidth + chromeWidth, QLabel::sizeHint().height());
 }
 
 void KSqueezedTextLabel::setText(const QString &text)
@@ -100,7 +101,7 @@ void KSqueezedTextLabel::clear()
 void KSqueezedTextLabel::squeezeTextToLabel()
 {
     QFontMetrics fm(fontMetrics());
-    int labelWidth = size().width();
+    const int labelWidth = contentsRect().width();
     QStringList squeezedLines;
     bool squeezed = false;
     Q_FOREACH (const QString &line, d->fullText.split(QLatin1Char('\n'))) {
@@ -120,6 +121,40 @@ void KSqueezedTextLabel::squeezeTextToLabel()
         QLabel::setText(d->fullText);
         setToolTip(QString());
     }
+}
+
+QRect KSqueezedTextLabel::contentsRect() const
+{
+    // calculation according to API docs for QLabel::indent
+    const int margin = this->margin();
+    int indent = this->indent();
+    if (indent < 0) {
+        if (frameWidth() == 0) {
+            indent = 0;
+        } else {
+            indent = fontMetrics().width(QLatin1Char('x')) / 2 - margin;
+        }
+    }
+
+    QRect result = QLabel::contentsRect();
+    if (indent > 0) {
+        const int alignment = this->alignment();
+        if (alignment & Qt::AlignLeft) {
+            result.setLeft(result.left() + indent);
+        }
+        if (alignment & Qt::AlignTop) {
+            result.setTop(result.top() + indent);
+        }
+        if (alignment & Qt::AlignRight) {
+            result.setRight(result.right() - indent);
+        }
+        if (alignment & Qt::AlignBottom) {
+            result.setBottom(result.bottom() - indent);
+        }
+    }
+
+    result.adjust(margin, margin, -margin, -margin);
+    return result;
 }
 
 void KSqueezedTextLabel::setAlignment(Qt::Alignment alignment)
@@ -146,6 +181,11 @@ QString KSqueezedTextLabel::fullText() const
     return d->fullText;
 }
 
+bool KSqueezedTextLabel::isSqueezed() const
+{
+    return d->fullText != text();
+}
+
 void KSqueezedTextLabel::contextMenuEvent(QContextMenuEvent *ev)
 {
     // We want to reimplement "Copy" to include the elided text.
@@ -157,9 +197,7 @@ void KSqueezedTextLabel::contextMenuEvent(QContextMenuEvent *ev)
     // For now I chose to show it when the text is squeezed; when it's not, the
     // standard popup menu can do the job (select all, copy).
 
-    const bool squeezed = text() != d->fullText;
-    const bool showCustomPopup = squeezed;
-    if (showCustomPopup) {
+    if (isSqueezed()) {
         QMenu menu(this);
 
         QAction *act = new QAction(tr("&Copy Full Text"), &menu);
