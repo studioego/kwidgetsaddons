@@ -27,6 +27,7 @@
 #include <QPainter>
 #include <QTextLayout>
 #include <QVBoxLayout>
+#include <QScrollBar>
 
 #include "kpagemodel.h"
 #include "loggingcategory.h"
@@ -128,20 +129,21 @@ void KPageListView::setModel(QAbstractItemModel *model)
     updateWidth();
 }
 
+void KPageListView::changeEvent(QEvent *event)
+{
+    QListView::changeEvent(event);
+
+    if (event->type() == QEvent::FontChange) {
+        updateWidth();
+    }
+}
+
 void KPageListView::updateWidth()
 {
     if (!model()) {
         return;
     }
-
-    int rows = model()->rowCount();
-
-    int width = 0;
-    for (int i = 0; i < rows; ++i) {
-        width = qMax(width, sizeHintForIndex(model()->index(i, 0)).width());
-    }
-
-    setFixedWidth(width + 25);
+    setFixedWidth(sizeHintForColumn(0) + verticalScrollBar()->sizeHint().width() + 5);
 }
 
 /**
