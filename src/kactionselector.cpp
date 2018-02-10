@@ -30,10 +30,15 @@ class KActionSelectorPrivate
 public:
     KActionSelectorPrivate(KActionSelector *q): q(q) {}
 
-    KActionSelector *q;
-    QListWidget *availableListWidget, *selectedListWidget;
-    QToolButton *btnAdd, *btnRemove, *btnUp, *btnDown;
-    QLabel *lAvailable, *lSelected;
+    KActionSelector *q = nullptr;
+    QListWidget *availableListWidget = nullptr;
+    QListWidget *selectedListWidget = nullptr;
+    QToolButton *btnAdd = nullptr;
+    QToolButton *btnRemove = nullptr;
+    QToolButton *btnUp = nullptr;
+    QToolButton *btnDown = nullptr;
+    QLabel *lAvailable = nullptr;
+    QLabel *lSelected = nullptr;
     bool moveOnDoubleClick : 1;
     bool keyboardEnabled : 1;
     bool showUpDownButtons : 1;
@@ -133,10 +138,10 @@ KActionSelector::KActionSelector(QWidget *parent)
 
     d->loadIcons();
 
-    connect(d->btnAdd, SIGNAL(clicked()), this, SLOT(buttonAddClicked()));
-    connect(d->btnRemove, SIGNAL(clicked()), this, SLOT(buttonRemoveClicked()));
-    connect(d->btnUp, SIGNAL(clicked()), this, SLOT(buttonUpClicked()));
-    connect(d->btnDown, SIGNAL(clicked()), this, SLOT(buttonDownClicked()));
+    connect(d->btnAdd, &QToolButton::clicked, this, [this]() { d->buttonAddClicked(); });
+    connect(d->btnRemove, &QToolButton::clicked, this, [this]() { d->buttonRemoveClicked(); });
+    connect(d->btnUp, &QToolButton::clicked, this, [this]() { d->buttonUpClicked(); });
+    connect(d->btnDown, &QToolButton::clicked, this, [this]() { d->buttonDownClicked(); });
     connect(d->availableListWidget, SIGNAL(itemDoubleClicked(QListWidgetItem*)),
             this, SLOT(itemDoubleClicked(QListWidgetItem*)));
     connect(d->selectedListWidget, SIGNAL(itemDoubleClicked(QListWidgetItem*)),

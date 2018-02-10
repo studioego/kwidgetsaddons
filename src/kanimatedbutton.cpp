@@ -31,7 +31,7 @@ class KAnimatedButtonPrivate
 {
 public:
     KAnimatedButtonPrivate(KAnimatedButton *qq)
-        : q(qq), movie(nullptr)
+        : q(qq)
     {
     }
 
@@ -42,7 +42,7 @@ public:
     void _k_timerUpdate();
 
     KAnimatedButton *q;
-    QMovie *movie;
+    QMovie *movie = nullptr;
 
     int                    frames;
     int                    current_frame;
@@ -57,7 +57,7 @@ public:
 KAnimatedButton::KAnimatedButton(QWidget *parent)
     : QToolButton(parent), d(new KAnimatedButtonPrivate(this))
 {
-    connect(&d->timer, SIGNAL(timeout()), this, SLOT(_k_timerUpdate()));
+    connect(&d->timer, &QTimer::timeout, this, [this]() { d->_k_timerUpdate(); });
 }
 
 KAnimatedButton::~KAnimatedButton()

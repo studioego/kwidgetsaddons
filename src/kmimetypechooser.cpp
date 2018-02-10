@@ -47,8 +47,8 @@ public:
     void _k_slotSycocaDatabaseChanged(const QStringList &);
 
     KMimeTypeChooser *q;
-    QTreeWidget *mimeTypeTree;
-    QPushButton *btnEditMimeType;
+    QTreeWidget *mimeTypeTree = nullptr;
+    QPushButton *btnEditMimeType = nullptr;
 
     QString defaultgroup;
     QStringList groups;
@@ -108,10 +108,10 @@ KMimeTypeChooser::KMimeTypeChooser(const QString &text,
         d->btnEditMimeType = new QPushButton(tr("&Edit..."), this);
         buttonLayout->addWidget(d->btnEditMimeType);
 
-        connect(d->btnEditMimeType, SIGNAL(clicked()), this, SLOT(_k_editMimeType()));
+        connect(d->btnEditMimeType, &QPushButton::clicked, this, [this]() { d->_k_editMimeType(); });
         d->btnEditMimeType->setEnabled(false);
-        connect(d->mimeTypeTree, SIGNAL(itemDoubleClicked(QTreeWidgetItem*,int)),
-                this, SLOT(_k_editMimeType()));
+        connect(d->mimeTypeTree, &QTreeWidget::itemDoubleClicked,
+                this, [this]() { d->_k_editMimeType(); });
         connect(d->mimeTypeTree, SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)),
                 this, SLOT(_k_slotCurrentChanged(QTreeWidgetItem*)));
 
